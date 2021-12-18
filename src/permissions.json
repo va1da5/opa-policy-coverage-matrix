@@ -1,0 +1,11 @@
+[
+  "account_create",
+  "account_view",
+  "account_update",
+  "account_delete",
+  "post_create",
+  "post_view",
+  "post_update",
+  "post_delete",
+  "all_delete"
+]

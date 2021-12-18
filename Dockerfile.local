@@ -1,0 +1,17 @@
+FROM node:16.13.1-slim
+
+EXPOSE 3000
+
+WORKDIR /app
+
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install
+
+COPY public/ /app/public/
+COPY src /app/src/
+
+ENTRYPOINT [ "npm" ]
+
+CMD [ "start" ]

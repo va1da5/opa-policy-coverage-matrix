@@ -1,0 +1,34 @@
+{
+  "groups": [
+    {
+      "name": "admin",
+      "members": [
+        "admin"
+      ]
+    },
+    {
+      "name": "account_managers",
+      "members": [
+        "bob"
+      ]
+    },
+    {
+      "name": "post_managers",
+      "members": [
+        "jane"
+      ]
+    },
+    {
+      "name": "quality_assurance",
+      "members": [
+        "alice"
+      ]
+    },
+    {
+      "name": "publishers",
+      "members": [
+        "john"
+      ]
+    }
+  ]
+}

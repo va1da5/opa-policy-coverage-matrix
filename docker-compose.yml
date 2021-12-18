@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  opa:
+    image: openpolicyagent/opa:0.35.0
+    command:
+      - "run"
+      - "--server"
+      - "--watch"
+      - "--bundle"
+      - "/policy"
+      - "--addr"
+      - ":8181"
+    volumes:
+      - ./policy:/policy
+      - ./data.json:/data/data.json
+    ports:
+      - "8181:8181"
+    restart: always
+
+  ui:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.local
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    ports:
+      - 3000:3000
+    restart: always

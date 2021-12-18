@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Open Policy Agent (OPA) Policy Coverage Matrix
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The repository contains a proof-of-concept implementation of the [Open Policy Agent (OPA)](https://www.openpolicyagent.org/) policy coverage visualization. Each condition from 2D matrix is being sent to OPA and the result is later presented using a table built with [React](https://reactjs.org/). The OPA policy can be further tuned and the coverage will update accordingly.
 
-## Available Scripts
+As an example, the current setup imitates a system where each user has a role and the role has a set of permissions. The system has a set of policies that define the permissions for each role. Nevertheless, this could be reused in a different context. However, it is currently limited to a two dimensional data set.
 
-In the project directory, you can run:
+## Requirements
 
-### `npm start`
+   - [Docker-compose](https://docs.docker.com/compose/install/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+# Download require container images
+docker-compose pull
 
-### `npm test`
+# Build initial React application image
+docker-compose build
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+# Start services
+docker-compose up -d
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Monitor service logs
+docker-compose logs -f
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Web based user interface will be available at [http://localhost:3000](http://localhost:3000)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The OPA policy is located in [./policy](./policy) directory. The bundle also includes a [data.json](./policy/data.json) file with user to group membership information. The OPA service is being started with `--watch` flag meaning that it does not require a manual reload after each policy change. However, the front-end does not monitor for policy changes and would required to reload a browser page after policy gets updated.
 
-### `npm run eject`
+The users and permissions displayed in the table are taken from [user.json](./src/users.json) and [permissions.json](./src/permissions.json) files.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## User Permissions Matrix
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The initial coverage matrix will look as the following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="./public/permission-matrix.png" width="600px">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Feel free to tweak the policy rules, group memberships and users to test different scenarios.
 
-## Learn More
+## References
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Dockerhub: openpolicyagent/opa](https://hub.docker.com/r/openpolicyagent/opa)
+- [Running OPA](https://www.openpolicyagent.org/docs/latest/#running-opa)
+- [awesome-opa](https://github.com/anderseknert/awesome-opa)
+- [Charka UI](https://chakra-ui.com/docs/getting-started)
